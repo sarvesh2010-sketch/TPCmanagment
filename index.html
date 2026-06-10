@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TPC | Training and Placement Cell Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>TPC Portal<span>.</span></h1>
+      <ul class="nav-links">
+        <li><a id="nav-home" class="active">Home</a></li>
+        <li><a id="nav-stats">Statistics</a></li>
+        <li><a id="nav-login">Login Desk</a></li>
+        <li><a id="nav-student" class="hidden">Student Portal</a></li>
+        <li><a id="nav-admin" class="hidden">Coordinator Console</a></li>
+        <li><a id="nav-logout" class="hidden link-danger">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="ticker-bar">
+    <div class="ticker-content">
+      <span class="ticker-label">TPC Bulletin</span>
+      <marquee id="ticker-announcements" class="ticker-text" scrollamount="4">Connecting with local administrative database announcements...</marquee>
+    </div>
+  </div>
+
+  <main>
+    <section id="view-home" class="view-section active">
+      <div class="card card-hero text-center">
+        <h2 class="hero-title">Training & Placement Cell</h2>
+        <p class="hero-description">Connecting core engineering talent with industry leaders. Vetting credentials, organizing recruitment drives, and tracking student success milestones.</p>
+        <div class="hero-actions">
+          <button id="hero-stats-btn" class="btn btn-primary">View Placements Ledger</button>
+          <button id="hero-login-btn" class="btn btn-success btn-space-left">Student & Admin Login</button>
+        </div>
+      </div>
+
+      <div class="grid-3 metric-row">
+        <div class="card text-center metric-card blue">
+          <h3 class="metric-value">42.0 LPA</h3>
+          <p class="metric-label">Highest Package</p>
+          <p class="metric-note">Stripe Systems Engineering</p>
+        </div>
+        <div class="card text-center metric-card green">
+          <h3 class="metric-value">98.2%</h3>
+          <p class="metric-label">Placement Rate</p>
+          <p class="metric-note">Batch 2026 Graduating Class</p>
+        </div>
+        <div class="card text-center metric-card orange">
+          <h3 class="metric-value">12.4 LPA</h3>
+          <p class="metric-label">Average Package</p>
+          <p class="metric-note">Overall engineering average</p>
+        </div>
+      </div>
+
+      <div class="card card-spaced">
+        <h3>The Recruitment Process Flow</h3>
+        <div class="grid-2 info-grid">
+          <div>
+            <ol class="info-list">
+              <li><strong>Profile Setup & Resume Analysis:</strong> Students build profiles and get readiness optimization suggestions.</li>
+              <li><strong>Opening Recruitment Drives:</strong> Visiting companies register drives and specify branch & GPA limits.</li>
+              <li><strong>Candidate Application Routing:</strong> Eligible applicants submit applications which are routed to recruiter vetting dashboards.</li>
+            </ol>
+          </div>
+          <div>
+            <ol class="info-list" start="4">
+              <li><strong>Interview Scheduling:</strong> Coordinators shortlist candidates and schedule coding/technical rounds.</li>
+              <li><strong>Offer Dispatch & Acceptance:</strong> Selected students receive placement offers and accept them.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-spaced">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-header">What criteria determines student eligibility for drives? <span class="faq-icon">+</span></div>
+            <div class="faq-body">Students must maintain a minimum cumulative CGPA of 6.0 and have no active backlogs. However, specific companies may dictate higher CGPA bounds (e.g. 8.5 CGPA required for top-tier software roles), which are filtered automatically by the system.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-header">How are interview schedules synchronized? <span class="faq-icon">+</span></div>
+            <div class="faq-body">Once a coordinator shortlists a candidate, they schedule the interview block on the admin console. This updates the student dashboard application timeline immediately with the date, time, and round information.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-header">Can recruiters directly access student resumes? <span class="faq-icon">+</span></div>
+            <div class="faq-body">Yes, companies registered and approved by the TPC Admin Hub can browse applicant credentials, view student skills, and see the optimized resume score index.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-stats" class="view-section">
+      <h2 class="page-title">Placements Ledger & Statistics</h2>
+      <p class="page-subtitle">Verified annual statistics and visitor registry from the Training & Placement Cell.</p>
+
+      <div class="grid-3 stat-row">
+        <div class="card text-center compact-card">
+          <h4 class="stat-label">Highest Annual CTC</h4>
+          <h2 id="stat-highest-package" class="stat-value">42.0 LPA</h2>
+        </div>
+        <div class="card text-center compact-card">
+          <h4 class="stat-label">Average Annual Package</h4>
+          <h2 id="stat-average-package" class="stat-value">12.4 LPA</h2>
+        </div>
+        <div class="card text-center compact-card">
+          <h4 class="stat-label">Placement Rate</h4>
+          <h2 id="stat-placement-ratio" class="stat-value">98.2%</h2>
+        </div>
+      </div>
+
+      <div class="card card-spaced compact-card">
+        <div class="grid-2">
+          <div class="form-group no-margin">
+            <label for="stats-search-input">Search Candidate or Recruiter Company</label>
+            <input type="text" id="stats-search-input" class="form-control" placeholder="Search by name, company...">
+          </div>
+          <div class="form-group no-margin">
+            <label for="stats-branch-filter">Filter by Branch / Department</label>
+            <select id="stats-branch-filter" class="form-control">
+              <option value="All">All Departments</option>
+              <option value="CSE">CSE (Computer Science)</option>
+              <option value="ECE">ECE (Electronics)</option>
+              <option value="MECH">MECH (Mechanical)</option>
+              <option value="MGMT">MGMT (Management)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Placed Candidates Directory</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Branch</th>
+                  <th>Placed Company</th>
+                  <th>Package CTC</th>
+                  <th>Skills Score</th>
+                </tr>
+              </thead>
+              <tbody id="stats-placements-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Visiting Corporate Partners</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Company Name</th>
+                  <th>Core Industry Sector</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="stats-companies-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-login" class="view-section">
+      <div class="card login-card">
+        <h2 class="section-heading">Portal Sign-In</h2>
+        <p class="section-note">Enter your workspace key credentials</p>
+
+        <div class="login-tabs">
+          <div id="login-tab-student" class="login-tab-btn active">Student Gate</div>
+          <div id="login-tab-coordinator" class="login-tab-btn">Coordinator Gate</div>
+        </div>
+
+        <div id="login-alert-container" class="hidden"></div>
+
+        <form id="login-form-submit">
+          <div class="form-group">
+            <label for="login-username">Username Key</label>
+            <input type="text" id="login-username" class="form-control" required placeholder="Enter student username (e.g. student)">
+          </div>
+          <div class="form-group">
+            <label for="login-password">Secret Password</label>
+            <input type="password" id="login-password" class="form-control" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-large">Authenticate Session</button>
+        </form>
+
+        <div id="student-signup-prompt" class="text-center small-note">Don't have a student profile? <a id="open-registration-link" class="link-highlight">Register Now</a></div>
+
+        <div class="divider-pane">
+          <h4 class="divider-title">Quick Evaluator Logins</h4>
+          <button id="demo-student-login" class="btn btn-secondary btn-block btn-sm btn-left-align">Log in as Siddharth Sharma (Student)</button>
+          <button id="demo-admin-login" class="btn btn-secondary btn-block btn-sm btn-left-align btn-admin">Log in as Prof. R. K. Prasad (Admin)</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-student" class="view-section">
+      <h2 class="page-title">Candidate Dashboard</h2>
+      <div id="student-alert-container" class="hidden"></div>
+
+      <div class="dashboard-layout">
+        <div class="sidebar">
+          <div class="card text-center profile-card">
+            <div class="profile-bubble" id="student-profile-initials">SS</div>
+            <h3 id="student-profile-name">Siddharth Sharma</h3>
+            <p id="student-profile-branch-gpa">CSE | GPA 9.20</p>
+            <div class="sidebar-section">
+              <span class="sidebar-label">Placement Readiness</span>
+              <div class="progress-container">
+                <div class="progress-bar" id="student-readiness-progress-bar"></div>
+              </div>
+              <div class="flex-space-between score-row">
+                <span>Readiness Score:</span>
+                <span id="student-readiness-percent" class="score-value">85%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>TPC Vetting Status</h3>
+            <div class="status-list">
+              <div class="flex-space-between status-row"><span>Academic Transcript</span><span class="badge badge-placed">Verified</span></div>
+              <div class="flex-space-between status-row"><span>Pre-vetting Interview</span><span class="badge badge-placed">Cleared</span></div>
+              <div class="flex-space-between status-row status-checkbox">
+                <label for="check-student-gov-id"><input type="checkbox" id="check-student-gov-id"> Govt ID Proof</label>
+                <span id="student-gov-id-status" class="badge badge-applied">Pending</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Practice Prep Desk</h3>
+            <div class="prep-actions">
+              <button id="prep-dsa" class="btn btn-secondary btn-sm btn-left-align">Data Structures Practice Guides</button>
+              <button id="prep-system" class="btn btn-secondary btn-sm btn-left-align">System Design Case Studies</button>
+              <button id="prep-hr" class="btn btn-secondary btn-sm btn-left-align">Behavioral Mock Questions</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-content">
+          <div class="card">
+            <h3>Technical Resume Grader</h3>
+            <p class="small-note">Analyze your technical summary metrics and adjust fields to boost your placement readiness score.</p>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="resume-projects-input">Number of Tech Projects</label>
+                <input type="number" id="resume-projects-input" class="form-control" value="3" min="0" max="10">
+              </div>
+              <div class="form-group">
+                <label for="resume-internships-input">Completed Internships</label>
+                <input type="number" id="resume-internships-input" class="form-control" value="1" min="0" max="5">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="resume-skills-input">Technical Skills Tags (comma separated)</label>
+              <input type="text" id="resume-skills-input" class="form-control" value="Java, React, Node.js, SQL, Git">
+            </div>
+            <button id="btn-grade-resume" class="btn btn-success">Analyze & Grade Resume</button>
+            <div id="resume-grade-result-container" class="hidden result-box">
+              <span>Calculated Resume Score:</span>
+              <strong id="resume-score-display">85/100</strong>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Active Placement Campus Drives</h3>
+            <p class="small-note">Eligible placement openings are listed below. Click Quick Apply to queue credentials.</p>
+            <div id="student-job-list" class="grid-2 job-grid"></div>
+          </div>
+
+          <div class="card">
+            <h3>Application Tracking Milestones</h3>
+            <p class="small-note">Track your round updates, code interview times, and offer dispatch states.</p>
+            <div id="student-timeline-container" class="timeline-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-admin" class="view-section">
+      <h2 class="page-title">TPC Coordinator Console</h2>
+      <div id="admin-alert-container" class="hidden"></div>
+
+      <div class="dashboard-layout">
+        <div class="sidebar">
+          <div class="card compact-card">
+            <h4 class="stat-label">Coordinator Overview</h4>
+            <div class="admin-summary">
+              <div class="flex-space-between"><span>Active Recruitment drives:</span><strong id="admin-metrics-drives" class="stat-highlight">4 drives</strong></div>
+              <div class="flex-space-between"><span>Total Dynamic Offers:</span><strong id="admin-metrics-placed" class="stat-highlight">1 placed</strong></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Recruiter Authorizations</h3>
+            <p class="small-note">Verify visiting corporate partner requests.</p>
+            <div id="admin-approvals-list"></div>
+          </div>
+
+          <div class="card">
+            <h3>Publish Drive Announcement</h3>
+            <p class="small-note">Send a live scrolling notification ticker to all campus users.</p>
+            <div class="form-group">
+              <label for="admin-announcement-text">Message Content</label>
+              <textarea id="admin-announcement-text" class="form-control" placeholder="Write drive update announcement..."></textarea>
+            </div>
+            <button id="admin-publish-announcement-btn" class="btn btn-secondary btn-block">Publish Campus Ticker</button>
+          </div>
+
+          <div class="card">
+            <h3>Placement Audit Feed</h3>
+            <p class="small-note">Live system event logs and audit logs.</p>
+            <div id="admin-live-activity-list" class="feed-list"></div>
+          </div>
+        </div>
+
+        <div class="dashboard-content">
+          <div class="card">
+            <h3>Student Applicant Vetting Desk</h3>
+            <p class="small-note">Review candidate GPA and resume indices. Shortlist or close applications.</p>
+            <div id="admin-vetting-list" class="vetting-list"></div>
+          </div>
+
+          <div class="card">
+            <h3>Schedule Candidate Interview Drives</h3>
+            <p class="small-note">Set up interview rounds and timetables for shortlisted applicants.</p>
+            <form id="admin-schedule-form">
+              <div class="form-group">
+                <label for="schedule-candidate-select">Candidate Application</label>
+                <select id="schedule-candidate-select" class="form-control" required></select>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="schedule-round-name">Evaluation Round Title</label>
+                  <select id="schedule-round-name" class="form-control">
+                    <option value="Coding Assessment Round">Coding Assessment Round</option>
+                    <option value="Technical Interview Block A">Technical Interview Block A</option>
+                    <option value="Systems Engineering Review">Systems Engineering Review</option>
+                    <option value="HR Managerial Discussion">HR Managerial Discussion</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="schedule-date-time">Schedule Date & Time</label>
+                  <input type="text" id="schedule-date-time" class="form-control" required placeholder="e.g. June 15, 2:30 PM">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Schedule Round</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Add Campus Placement Opening (Post Job)</h3>
+            <p class="small-note">Register a visiting corporate opening drive with academic criteria.</p>
+            <form id="admin-job-drive-form">
+              <div class="grid-3">
+                <div class="form-group">
+                  <label for="admin-job-company">Company Brand Name</label>
+                  <input type="text" id="admin-job-company" class="form-control" required placeholder="e.g. OpenAI">
+                </div>
+                <div class="form-group">
+                  <label for="admin-job-role">Designated Role Profile</label>
+                  <input type="text" id="admin-job-role" class="form-control" required placeholder="e.g. Software Associate">
+                </div>
+                <div class="form-group">
+                  <label for="admin-job-ctc">Annual Package CTC (LPA)</label>
+                  <input type="number" id="admin-job-ctc" class="form-control" step="0.1" required placeholder="e.g. 24.5">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="admin-job-cgpa">Minimum GPA Threshold</label>
+                  <input type="number" id="admin-job-cgpa" class="form-control" step="0.1" min="0" max="10" required placeholder="e.g. 8.0">
+                </div>
+                <div class="form-group">
+                  <label for="admin-job-branch">Eligible Academic Branch</label>
+                  <select id="admin-job-branch" class="form-control">
+                    <option value="ALL">ALL Engineering Branches</option>
+                    <option value="CSE">CSE (Computer Science)</option>
+                    <option value="ECE">ECE (Electronics)</option>
+                    <option value="MECH">MECH (Mechanical)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="admin-job-desc">Job Opening Description Summary</label>
+                <textarea id="admin-job-desc" class="form-control" required placeholder="Write job details and skills requirements..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-success">Publish Opening Drive</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Branch Matrix Performance Ledger</h3>
+            <p class="small-note">Audit cumulative indices across engineering departments.</p>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Branch</th>
+                    <th>Registered Candidates</th>
+                    <th>Vetted Placed</th>
+                    <th>Percentage Status</th>
+                    <th>Average Package</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-branch-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="registration-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+    <button id="registration-close-btn" class="modal-close-btn">&times;</button>
+      <h3 class="modal-title">Register Student Profile</h3>
+      <p class="modal-text">Create a campus credentials card for placement drives.</p>
+      <div id="signup-alert-container" class="hidden"></div>
+      <form id="registration-form">
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="reg-student-username">Username Key</label>
+            <input type="text" id="reg-student-username" class="form-control" required placeholder="e.g. aditi">
+          </div>
+          <div class="form-group">
+            <label for="reg-student-password">Secret password</label>
+            <input type="password" id="reg-student-password" class="form-control" required placeholder="••••••••">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-student-name">Full Name</label>
+          <input type="text" id="reg-student-name" class="form-control" required placeholder="e.g. Aditi Sen">
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="reg-student-branch">Department Branch</label>
+            <select id="reg-student-branch" class="form-control">
+              <option value="CSE">CSE (Computer Science)</option>
+              <option value="ECE">ECE (Electronics)</option>
+              <option value="MECH">MECH (Mechanical)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reg-student-gpa">Cumulative CGPA</label>
+            <input type="number" id="reg-student-gpa" class="form-control" step="0.01" min="0" max="10" required placeholder="e.g. 7.85">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-student-skills">Technical Skills (comma separated)</label>
+          <input type="text" id="reg-student-skills" class="form-control" required placeholder="e.g. React, HTML, CSS, JavaScript">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Register Profile</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Training and Placement Cell Management System. All academic indicators are encrypted locally.</p>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
