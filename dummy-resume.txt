@@ -1,8 +1,8 @@
-Ryan Mehndiratta
-Email: ryan.mehndiratta@example.com
+Sanskar Srivastava
+Email: sanskarsrivastava@example.com
 Phone: +91 9876543210
-LinkedIn: linkedin.com/in/ryan-mehndiratta
-GitHub: github.com/ryan-mehndiratta
+LinkedIn: linkedin.com/in/sanskar-srivastava
+GitHub: github.com/sanskar-srivastava
 
 Career Objective
 Computer Science engineering student seeking a software engineering role where I can apply data structures, algorithms, full stack development, and cloud deployment knowledge to build reliable products.
