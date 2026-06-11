@@ -1,0 +1,37 @@
+Ryan Mehndiratta
+Email: ryan.mehndiratta@example.com
+Phone: +91 9876543210
+LinkedIn: linkedin.com/in/ryan-mehndiratta
+GitHub: github.com/ryan-mehndiratta
+
+Career Objective
+Computer Science engineering student seeking a software engineering role where I can apply data structures, algorithms, full stack development, and cloud deployment knowledge to build reliable products.
+
+Education
+B.Tech in Computer Science Engineering
+Current CGPA: 9.20
+
+Technical Skills
+Java, Python, JavaScript, React, Node.js, SQL, HTML, CSS, Git, Docker, AWS, REST API, Data Structures, Algorithms
+
+Projects
+Training and Placement Cell Management System
+- Developed a web-based placement portal using HTML, CSS, and JavaScript.
+- Implemented student registration, login, job application tracking, resume grading, admin vetting, and interview scheduling.
+- Used browser localStorage to manage student, job, company, application, and announcement data.
+
+Smart Attendance Dashboard
+- Built a responsive dashboard using React and Node.js.
+- Designed REST API endpoints and SQL tables for attendance reports.
+- Automated monthly attendance summaries and tested all major user flows.
+
+Internship
+Software Developer Intern
+- Worked on frontend components using React and JavaScript.
+- Optimized page layout performance and improved form validation.
+- Collaborated with team members using Git and GitHub.
+
+Achievements
+- Solved 250+ data structures and algorithms problems.
+- Deployed portfolio projects on cloud hosting.
+- Participated in college-level hackathon and built a campus utility application.

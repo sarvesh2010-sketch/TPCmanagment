@@ -53,7 +53,7 @@ const DEFAULT_APPLICATIONS = [
   {
     id: "app-mock-1",
     jobId: "job-3",
-    studentName: "Siddharth Sharma",
+    studentName: "Ryan Mehndiratta",
     studentGPA: 9.2,
     studentBranch: "CSE",
     studentSkills: "Java, React, Node.js, SQL, Git",
@@ -94,7 +94,7 @@ const DEFAULT_ACCOUNTS = [
     username: "student",
     password: "student123",
     role: "student",
-    name: "Siddharth Sharma",
+    name: "Ryan Mehndiratta",
     gpa: 9.2,
     branch: "CSE",
     skills: "Java, React, Node.js, SQL, Git",
@@ -191,6 +191,93 @@ const saveAnnouncements = (ann) => localStorage.setItem("tpc_announcements", JSO
 const getAccounts = () => JSON.parse(localStorage.getItem("tpc_accounts") || "[]");
 const saveAccounts = (accs) => localStorage.setItem("tpc_accounts", JSON.stringify(accs));
 
+const RESUME_KEYWORDS = [
+  "react", "node", "sql", "java", "python", "docker", "aws", "kubernetes", "c++", "git",
+  "javascript", "html", "css", "machine learning", "data structures", "algorithms", "api"
+];
+
+function countKeywordMatches(text, skillsInput) {
+  const searchable = `${text || ""} ${skillsInput || ""}`.toLowerCase();
+  return RESUME_KEYWORDS.filter(keyword => searchable.includes(keyword)).length;
+}
+
+function extractSkillsFromResume(text) {
+  const lower = (text || "").toLowerCase();
+  return RESUME_KEYWORDS
+    .filter(keyword => lower.includes(keyword))
+    .map(keyword => keyword.replace(/\b\w/g, char => char.toUpperCase()))
+    .join(", ");
+}
+
+function countMatches(text, patterns) {
+  const lower = (text || "").toLowerCase();
+  return patterns.filter(pattern => lower.includes(pattern)).length;
+}
+
+function calculateTechnicalResumeScore(skillsInput, projects, internships, resumeText = "") {
+  const text = (resumeText || "").toLowerCase();
+  const wordCount = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  const keywordMatches = countKeywordMatches(text, skillsInput);
+  const projectSignals = countMatches(text, ["project", "projects", "github", "portfolio", "built", "developed", "implemented"]);
+  const internshipSignals = countMatches(text, ["intern", "internship", "trainee", "industrial training", "work experience"]);
+  const educationSignals = countMatches(text, ["b.tech", "btech", "engineering", "cgpa", "gpa", "degree"]);
+  const contactSignals = countMatches(text, ["@", "linkedin", "github.com", "phone", "+91"]);
+  const actionSignals = countMatches(text, ["optimized", "designed", "deployed", "automated", "tested", "managed"]);
+
+  let score = 30;
+  score += Math.min((parseInt(projects) || 0) * 6, 18);
+  score += Math.min((parseInt(internships) || 0) * 10, 20);
+  score += Math.min(keywordMatches * 3, 21);
+
+  if (resumeText) {
+    if (wordCount >= 250) score += 10;
+    else if (wordCount >= 120) score += 8;
+    else if (wordCount >= 60) score += 5;
+
+    score += Math.min(projectSignals * 2, 8);
+    score += Math.min(internshipSignals * 3, 6);
+    score += Math.min(educationSignals * 2, 6);
+    score += Math.min(contactSignals * 2, 6);
+    score += Math.min(actionSignals * 2, 5);
+  }
+
+  score = Math.min(score, 100);
+
+  const feedback = [];
+  feedback.push(`${keywordMatches} technical keyword${keywordMatches === 1 ? "" : "s"} matched`);
+  if (resumeText) {
+    feedback.push(`${wordCount} readable resume words scanned`);
+    if (projectSignals === 0) feedback.push("add stronger project details");
+    if (contactSignals === 0) feedback.push("add contact or profile links");
+  } else {
+    feedback.push("upload a text-readable resume for deeper analysis");
+  }
+
+  return { score, feedback };
+}
+
+async function readResumeFile(file) {
+  const maxBytes = 1024 * 1024;
+  if (!file) {
+    return { success: false, error: "Please upload your resume before registration." };
+  }
+  if (file.size > maxBytes) {
+    return { success: false, error: "Resume file must be below 1 MB for local browser storage." };
+  }
+
+  const rawText = await file.text();
+  return {
+    success: true,
+    profile: {
+      fileName: file.name,
+      fileType: file.type || "application/octet-stream",
+      fileSize: file.size,
+      uploadedAt: new Date().toISOString(),
+      text: rawText.slice(0, 12000)
+    }
+  };
+}
+
 // Log an item to the activity audit feed
 function addFeedItem(message) {
   const feed = getFeed();
@@ -222,11 +309,12 @@ function logoutUser() {
   sessionStorage.removeItem("currentUser");
 }
 
-function registerNewStudent(username, password, name, gpa, branch, skills) {
+function registerNewStudent(username, password, name, gpa, branch, skills, resumeProfile) {
   const accounts = getAccounts();
   if (accounts.some(acc => acc.username.toLowerCase() === username.toLowerCase())) {
     return { success: false, error: "Username already exists." };
   }
+  const resumeGrade = calculateTechnicalResumeScore(skills, 0, 0, resumeProfile && resumeProfile.text);
   const newStudent = {
     username,
     password,
@@ -235,7 +323,8 @@ function registerNewStudent(username, password, name, gpa, branch, skills) {
     gpa: parseFloat(gpa),
     branch,
     skills,
-    score: 70
+    resumeProfile,
+    score: resumeGrade.score
   };
   accounts.push(newStudent);
   saveAccounts(accounts);
@@ -407,7 +496,7 @@ function renderStatsTables() {
   placementsBody.innerHTML = "";
 
   const basePlacedLogs = [
-    { name: "Siddharth Sharma", branch: "CSE", company: "Figma", ctc: 18.0, score: 85 },
+    { name: "Ryan Mehndiratta", branch: "CSE", company: "Figma", ctc: 18.0, score: 85 },
     { name: "Mayra Verma", branch: "CSE", company: "Stripe", ctc: 42.0, score: 94 },
     { name: "Rahul Malhotra", branch: "ECE", company: "Microsoft", ctc: 12.5, score: 78 },
     { name: "Priya Sen", branch: "CSE", company: "Adobe", ctc: 10.8, score: 81 }
@@ -553,6 +642,10 @@ function loadStudentView() {
 
   // Prepopulate resume grader
   document.getElementById("resume-skills-input").value = currentUser.skills || "";
+  document.getElementById("student-resume-file-name").textContent =
+    currentUser.resumeProfile && currentUser.resumeProfile.fileName
+      ? currentUser.resumeProfile.fileName
+      : "No resume uploaded";
   
   // Readiness score
   updateStudentReadinessUI();
@@ -595,22 +688,12 @@ window.gradeStudentResume = function() {
   const skillsInput = document.getElementById("resume-skills-input").value.trim();
   const projects = parseInt(document.getElementById("resume-projects-input").value) || 0;
   const internships = parseInt(document.getElementById("resume-internships-input").value) || 0;
-
-  let score = 40; // Base score
-  score += Math.min(projects * 8, 24);
-  score += Math.min(internships * 13, 26);
-
-  const parsed = skillsInput.split(",").map(s => s.trim().toLowerCase());
-  const critical = ["react", "node", "sql", "java", "python", "docker", "aws", "kubernetes", "c++", "git"];
-  let keywordPoints = 0;
-  parsed.forEach(s => {
-    if (critical.includes(s)) keywordPoints += 5;
-  });
-  score += Math.min(keywordPoints, 20);
-  score = Math.min(score, 100);
+  const user = getCurrentUser();
+  const resumeText = user.resumeProfile ? user.resumeProfile.text : "";
+  const resumeGrade = calculateTechnicalResumeScore(skillsInput, projects, internships, resumeText);
+  const score = resumeGrade.score;
 
   // Update session and store
-  const user = getCurrentUser();
   user.skills = skillsInput;
   user.score = score;
   sessionStorage.setItem("currentUser", JSON.stringify(user));
@@ -620,6 +703,9 @@ window.gradeStudentResume = function() {
   updateStudentReadinessUI();
   document.getElementById("resume-score-display").textContent = score + "/100";
   document.getElementById("resume-grade-result-container").classList.remove("hidden");
+  const feedback = document.getElementById("resume-feedback-text");
+  feedback.textContent = resumeGrade.feedback.join(" | ");
+  feedback.classList.remove("hidden");
 
   // Log activity
   addFeedItem(`${user.name} (B.Tech ${user.branch}) analyzed resume. Readiness score set to ${score}%.`);
@@ -1061,21 +1147,37 @@ window.closeStudentRegistration = function() {
   document.getElementById("registration-form").reset();
 };
 
-window.submitStudentRegistration = function(e) {
+window.submitStudentRegistration = async function(e) {
   e.preventDefault();
   const username = document.getElementById("reg-student-username").value.trim();
   const name = document.getElementById("reg-student-name").value.trim();
   const password = document.getElementById("reg-student-password").value;
   const branch = document.getElementById("reg-student-branch").value;
   const gpa = document.getElementById("reg-student-gpa").value.trim();
-  const skills = document.getElementById("reg-student-skills").value.trim();
+  const skillsField = document.getElementById("reg-student-skills");
+  let skills = skillsField ? skillsField.value.trim() : "";
+  const resumeFile = document.getElementById("reg-student-resume").files[0];
 
-  if (!username || !name || !password || !gpa || !skills) {
+  if (!username || !name || !password || !gpa || !resumeFile) {
     showAlert("signup-alert-container", "All registration parameters are mandatory.", "danger");
     return;
   }
 
-  const res = registerNewStudent(username, password, name, gpa, branch, skills);
+  const resumeRead = await readResumeFile(resumeFile);
+  if (!resumeRead.success) {
+    showAlert("signup-alert-container", resumeRead.error, "danger");
+    return;
+  }
+
+  if (!skills) {
+    skills = extractSkillsFromResume(resumeRead.profile.text);
+  }
+  if (!skills) {
+    showAlert("signup-alert-container", "Add technical skills or upload a text-readable resume.", "danger");
+    return;
+  }
+
+  const res = registerNewStudent(username, password, name, gpa, branch, skills, resumeRead.profile);
   if (res.success) {
     closeStudentRegistration();
     // Auto fill and switch views

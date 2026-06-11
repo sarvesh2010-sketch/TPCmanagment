@@ -197,7 +197,7 @@
 
         <div class="divider-pane">
           <h4 class="divider-title">Quick Evaluator Logins</h4>
-          <button id="demo-student-login" class="btn btn-secondary btn-block btn-sm btn-left-align">Log in as Siddharth Sharma (Student)</button>
+          <button id="demo-student-login" class="btn btn-secondary btn-block btn-sm btn-left-align">Log in as Ryan Mehndiratta (Student)</button>
           <button id="demo-admin-login" class="btn btn-secondary btn-block btn-sm btn-left-align btn-admin">Log in as Prof. R. K. Prasad (Admin)</button>
         </div>
       </div>
@@ -210,8 +210,8 @@
       <div class="dashboard-layout">
         <div class="sidebar">
           <div class="card text-center profile-card">
-            <div class="profile-bubble" id="student-profile-initials">SS</div>
-            <h3 id="student-profile-name">Siddharth Sharma</h3>
+            <div class="profile-bubble" id="student-profile-initials">RM</div>
+            <h3 id="student-profile-name">Ryan Mehndiratta</h3>
             <p id="student-profile-branch-gpa">CSE | GPA 9.20</p>
             <div class="sidebar-section">
               <span class="sidebar-label">Placement Readiness</span>
@@ -250,7 +250,10 @@
         <div class="dashboard-content">
           <div class="card">
             <h3>Technical Resume Grader</h3>
-            <p class="small-note">Analyze your technical summary metrics and adjust fields to boost your placement readiness score.</p>
+            <p class="small-note">Analyze your uploaded resume and technical summary metrics to boost your placement readiness score.</p>
+            <div class="resume-upload-status">
+              Uploaded Resume: <strong id="student-resume-file-name">No resume uploaded</strong>
+            </div>
             <div class="grid-2">
               <div class="form-group">
                 <label for="resume-projects-input">Number of Tech Projects</label>
@@ -270,6 +273,7 @@
               <span>Calculated Resume Score:</span>
               <strong id="resume-score-display">85/100</strong>
             </div>
+            <p id="resume-feedback-text" class="resume-feedback-text hidden"></p>
           </div>
 
           <div class="card">
@@ -429,6 +433,10 @@
       <p class="modal-text">Create a campus credentials card for placement drives.</p>
       <div id="signup-alert-container" class="hidden"></div>
       <form id="registration-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="Email" class="form-control" required placeholder="Enter your Email">
+        </div>
         <div class="grid-2">
           <div class="form-group">
             <label for="reg-student-username">Username Key</label>
@@ -458,8 +466,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="reg-student-skills">Technical Skills (comma separated)</label>
-          <input type="text" id="reg-student-skills" class="form-control" required placeholder="e.g. React, HTML, CSS, JavaScript">
+          <label for="reg-student-resume">Upload Resume</label>
+          <input type="file" id="reg-student-resume" class="form-control" required accept=".txt,.md,.pdf,.doc,.docx">
+          <p class="field-help">TXT or MD resumes give the most accurate browser-based score; PDF/DOC files are stored and scored using readable text plus profile skills.</p>
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-large">Register Profile</button>
       </form>
